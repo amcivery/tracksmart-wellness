@@ -26,6 +26,9 @@ import WearableChartWrapper from "@/components/WearableChartWrapper";
 const TOOL_DISCLAIMER =
   "This is an educational tool only. Not medical advice. Consult your doctor.";
 const STORAGE_KEY = "tracksmart-hrv-simulations";
+const AMAZON_TAG = "tracksmartwel-20";
+const AMAZON_DISCLAIMER =
+  "As an Amazon Associate I earn from qualifying purchases.";
 
 const trainingLoads = ["low", "medium", "high"] as const;
 type TrainingLoad = (typeof trainingLoads)[number];
@@ -220,7 +223,7 @@ function buildSuggestions(
 
   if (!values.magnesium) {
     suggestions.push(
-      "Consider magnesium glycinate in the evening. Small human studies suggest magnesium status can improve HRV or vagal tone, often in the 10-15% range when stress or deficiency is a factor.",
+      `Consider magnesium glycinate in the evening. Small human studies suggest magnesium status can improve HRV or vagal tone, often in the 10-15% range when stress or deficiency is a factor. <a href="https://www.amazon.com/dp/B07P5K7DQP?tag=${AMAZON_TAG}" target="_blank" rel="noopener noreferrer" className="font-semibold text-emerald-300 hover:text-emerald-200 underline">see Amazon</a>`,
     );
   }
 
@@ -1073,14 +1076,24 @@ export default function HRVOptimizer() {
                 </div>
 
                 {result ? (
-                  <ul className="mt-6 space-y-3 text-sm leading-6 text-slate-300">
+                  <>
+                    <ul className="mt-6 space-y-3 text-sm leading-6 text-slate-300">
                     {result.suggestions.map((suggestion) => (
                       <li key={suggestion} className="flex gap-3">
                         <span className="mt-2 h-2 w-2 rounded-full bg-emerald-300" />
-                        <span>{suggestion}</span>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: suggestion.replace(/className=/g, "class="),
+                          }}
+                        />
                       </li>
                     ))}
-                  </ul>
+                    </ul>
+                    <p className="mt-6 text-xs text-slate-500">
+                      {AMAZON_DISCLAIMER} Links are to products I believe are
+                      high-quality based on user feedback and testing.
+                    </p>
+                  </>
                 ) : (
                   <p className="mt-6 text-sm text-slate-500">
                     Run the simulation to generate personalized guidance.

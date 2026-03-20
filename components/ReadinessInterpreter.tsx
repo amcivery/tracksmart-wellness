@@ -25,6 +25,9 @@ import WearableChartWrapper from "@/components/WearableChartWrapper";
 const TOOL_DISCLAIMER =
   "This is an educational tool only. Not medical advice. Consult your doctor.";
 const STORAGE_KEY = "tracksmart-readiness-sessions";
+const AMAZON_TAG = "tracksmartwel-20";
+const AMAZON_DISCLAIMER =
+  "As an Amazon Associate I earn from qualifying purchases.";
 
 const deviceKeys = [
   "ouraReadiness",
@@ -127,7 +130,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Push bedtime earlier and aim for a cooler, darker room tonight." },
           {
             text: "Try magnesium glycinate to support wind-down.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B07P5K7DQP?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -144,7 +147,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Bias your calendar toward focus blocks instead of extra intensity." },
           {
             text: "Use a simple electrolyte mix before noon.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B08MVDTLKC?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -216,7 +219,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Increase water, sodium, and easy carbohydrates if you trained hard." },
           {
             text: "A cooling sleep mask can help improve tonight's setup.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B0C9KNWMY6?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -233,7 +236,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Front-load protein and a real breakfast if you feel flat." },
           {
             text: "Cut late alcohol for the next 24 hours.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B079P7FXTW?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -331,7 +334,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "A short post-workout walk can smooth recovery." },
           {
             text: "Compression socks can help if you are sitting for long stretches.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B07VWT4XRG?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -361,7 +364,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Eat enough carbohydrate to refill what you spent." },
           {
             text: "A foam roller or massage gun can help bring down stiffness.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B00XM2MXK8?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -394,7 +397,7 @@ const deviceDefinitions: Record<DeviceKey, DeviceDefinition> = {
           { text: "Reduce unnecessary decisions and meetings if you can." },
           {
             text: "Blue-light blocking glasses may help your evening wind-down.",
-            href: "#",
+            href: `https://www.amazon.com/dp/B01N3RQETD?tag=${AMAZON_TAG}`,
             linkLabel: "see Amazon",
           },
         ],
@@ -1274,7 +1277,9 @@ export default function ReadinessInterpreter() {
                                 {tip.href && tip.linkLabel ? (
                                   <a
                                     href={tip.href}
-                                    className="font-semibold text-cyan-300 hover:text-cyan-200"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-semibold text-cyan-300 hover:text-cyan-200 underline"
                                   >
                                     {tip.linkLabel}
                                   </a>
@@ -1283,6 +1288,10 @@ export default function ReadinessInterpreter() {
                             </li>
                           ))}
                         </ul>
+                        <p className="mt-6 text-xs text-slate-500">
+                          {AMAZON_DISCLAIMER} Links are to products I believe are
+                          high-quality based on user feedback and testing.
+                        </p>
 
                         {analysis.contextTips.length > 0 && (
                           <>
