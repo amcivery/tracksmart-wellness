@@ -63,6 +63,23 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-04TGL3EVR8"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-04TGL3EVR8');
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <Script
           id="tracksmart-root-schema"
