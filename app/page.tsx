@@ -130,21 +130,6 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      <Script id="tracksmart-optin-submit" strategy="afterInteractive">
-        {`
-          (() => {
-            const form = document.getElementById("email-optin-form");
-            if (!form) return;
-            form.addEventListener("submit", (event) => {
-              event.preventDefault();
-              const formData = new FormData(form);
-              console.log("TrackSmart opt-in submitted:", {
-                email: formData.get("email")
-              });
-            });
-          })();
-        `}
-      </Script>
       <Script
         id="landing-faq-schema"
         type="application/ld+json"
@@ -456,7 +441,12 @@ export default function LandingPage() {
             </div>
 
             <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-6">
-              <form id="email-optin-form" className="space-y-4">
+              <form
+                id="email-optin-form"
+                action="https://formspree.io/f/mzdjwwne"
+                method="POST"
+                className="space-y-4"
+              >
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-slate-200"
@@ -478,6 +468,10 @@ export default function LandingPage() {
                   Get Updates
                 </button>
               </form>
+              <p className="mt-4 text-sm font-medium text-emerald-400">
+                Thanks! Check your email for the 2026 Wearable Score Cheat
+                Sheet.
+              </p>
 
               <p className="mt-4 text-sm leading-6 text-slate-500">
                 Disclaimer: TrackSmart Wellness is for educational purposes only
