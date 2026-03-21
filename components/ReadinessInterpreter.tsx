@@ -603,12 +603,16 @@ function buildTipSections(values: FormValues, range: RangeDefinition) {
   if (values.poorSleep) {
     contextTips.push({
       text: "Add a stricter wind-down tonight: dim lights, cut screens, and guard the last hour before bed.",
+      href: `https://www.amazon.com/dp/B01N3RQETD?tag=${AMAZON_TAG}`,
+      linkLabel: "see Amazon",
     });
   }
 
   if (values.alcoholLastNight) {
     contextTips.push({
       text: "Treat hydration, electrolytes, and an earlier bedtime as non-negotiable today.",
+      href: `https://www.amazon.com/dp/B08MVDTLKC?tag=${AMAZON_TAG}`,
+      linkLabel: "see Amazon",
     });
   }
 
@@ -1302,7 +1306,19 @@ export default function ReadinessInterpreter() {
                               {analysis.contextTips.map((tip) => (
                                 <li key={tip.text} className="flex gap-3">
                                   <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
-                                  <span>{tip.text}</span>
+                                  <span>
+                                    {tip.text}{" "}
+                                    {tip.href && tip.linkLabel ? (
+                                      <a
+                                        href={tip.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-semibold text-cyan-300 hover:text-cyan-200 underline"
+                                      >
+                                        {tip.linkLabel}
+                                      </a>
+                                    ) : null}
+                                  </span>
                                 </li>
                               ))}
                             </ul>
