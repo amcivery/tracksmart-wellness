@@ -1,13 +1,67 @@
 import type { Metadata } from "next";
 
+const PRODUCTION_SITE_URL = "https://www.tracksmartwellness.com";
+const LOCAL_SITE_URL = "http://localhost:3000";
+
+function normalizeSiteUrl(value?: string) {
+  if (!value) return null;
+
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+
+  const withProtocol = /^https?:\/\//i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`;
+
+  try {
+    return new URL(withProtocol).toString().replace(/\/$/, "");
+  } catch {
+    return null;
+  }
+}
+
+function isLocalUrl(value: string) {
+  const hostname = new URL(value).hostname;
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0"
+  );
+}
+
+function resolveSiteUrl() {
+  const configuredSiteUrl = normalizeSiteUrl(
+    process.env.NEXT_PUBLIC_SITE_URL ?? process.env.SITE_URL,
+  );
+
+  if (
+    configuredSiteUrl &&
+    (process.env.NODE_ENV !== "production" || !isLocalUrl(configuredSiteUrl))
+  ) {
+    return configuredSiteUrl;
+  }
+
+  const vercelProductionUrl = normalizeSiteUrl(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  );
+  if (vercelProductionUrl) return vercelProductionUrl;
+
+  if (process.env.NODE_ENV === "production") {
+    return PRODUCTION_SITE_URL;
+  }
+
+  const vercelPreviewUrl = normalizeSiteUrl(process.env.VERCEL_URL);
+  if (vercelPreviewUrl) return vercelPreviewUrl;
+
+  return LOCAL_SITE_URL;
+}
+
 export const siteConfig = {
   name: "TrackSmart Wellness",
   title: "TrackSmart Wellness | Free Oura & Whoop Score Interpreters 2026",
   description:
     "Free wearable data interpretation tools for Oura, Whoop, and Garmin in 2026, including readiness score calculators, recovery explainers, and HRV optimization guidance.",
-  siteUrl:
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "http://localhost:3000",
+  siteUrl: resolveSiteUrl(),
   keywords: [
     "Oura readiness score explained 2026",
     "Whoop recovery score explained",
