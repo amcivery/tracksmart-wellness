@@ -309,9 +309,6 @@ export default function LandingPage() {
                             <p className="text-sm font-medium text-slate-200">
                               {card.placeholderTitle}
                             </p>
-                            <p className="mt-1 text-xs uppercase tracking-[0.24em] text-slate-500">
-                              Screenshot placeholder
-                            </p>
                           </div>
                           <p className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm font-semibold text-white">
                             {card.placeholderMetric}
