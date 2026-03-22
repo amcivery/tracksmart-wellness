@@ -1,5 +1,6 @@
 import Script from "next/script";
 import ReadinessInterpreter from "@/components/ReadinessInterpreter";
+import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
@@ -62,6 +63,7 @@ export default function ReadinessInterpreterPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
+      <SiteHeader activePath="/tools/readiness-interpreter" />
       <ReadinessInterpreter />
     </>
   );

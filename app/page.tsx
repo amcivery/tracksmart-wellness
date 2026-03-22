@@ -7,11 +7,10 @@ import {
   ChevronRight,
   HeartPulse,
   MoonStar,
-  ShieldCheck,
   Sparkles,
-  Watch,
 } from "lucide-react";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
+import SiteHeader from "@/components/SiteHeader";
 
 const toolCards = [
   {
@@ -136,30 +135,13 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
+      <SiteHeader />
+
       <div className="relative isolate">
         <div className="absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(16,185,129,0.16),_transparent_30%),linear-gradient(180deg,_rgba(15,23,42,0.2),_rgba(2,6,23,0.95))]" />
         <div className="absolute inset-x-0 top-24 -z-10 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
 
         <section className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pb-20 lg:pt-8">
-          <div className="flex items-center justify-between rounded-full border border-slate-800/80 bg-slate-900/60 px-4 py-3 backdrop-blur">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-300/20">
-                <Watch className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold tracking-wide text-slate-100">
-                  TrackSmart Wellness
-                </p>
-                <p className="text-xs text-slate-400">
-                  Free wearable data interpretation for 2026
-                </p>
-              </div>
-            </div>
-            <div className="hidden items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-200 sm:flex">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Educational only
-            </div>
-          </div>
 
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="max-w-3xl">

@@ -1,5 +1,6 @@
 import Script from "next/script";
 import HRVOptimizer from "@/components/HRVOptimizer";
+import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
@@ -65,6 +66,7 @@ export default function HRVOptimizerPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
+      <SiteHeader activePath="/tools/hrv-optimizer" />
       <HRVOptimizer />
     </>
   );
