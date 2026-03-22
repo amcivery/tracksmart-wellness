@@ -27,12 +27,29 @@ const deviceFilters: { key: Device | "all"; label: string }[] = [
   { key: "cross-device", label: "All Devices" },
 ];
 
-export default function GuidesIndexPage() {
+function isDeviceFilter(value: string): value is Device {
+  return Object.hasOwn(deviceMeta, value);
+}
+
+export default async function GuidesIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ device?: string }>;
+}) {
+  const { device } = await searchParams;
+  const activeDevice = device && isDeviceFilter(device) ? device : "all";
+
   // High-priority guides first, then medium
   const sortedGuides = [...guides].sort((a, b) => {
     if (a.priority === b.priority) return 0;
     return a.priority === "high" ? -1 : 1;
   });
+  const visibleGuides =
+    activeDevice === "all"
+      ? sortedGuides
+      : sortedGuides.filter((guide) => guide.device === activeDevice);
+  const activeLabel =
+    activeDevice === "all" ? "All Guides" : deviceMeta[activeDevice].label;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -62,32 +79,65 @@ export default function GuidesIndexPage() {
           {/* ── Device filter legend ── */}
           <div className="mt-10 flex flex-wrap gap-2">
             {deviceFilters.map(({ key, label }) => {
+              const count =
+                key === "all"
+                  ? guides.length
+                  : guides.filter((guide) => guide.device === key).length;
+              const isActive = activeDevice === key;
+
               if (key === "all") {
                 return (
-                  <span
+                  <Link
                     key={key}
-                    className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-sm font-medium text-slate-200"
+                    href="/guides"
+                    aria-current={isActive ? "page" : undefined}
+                    className={`rounded-full border px-3 py-1 text-sm font-medium transition ${
+                      isActive
+                        ? "border-slate-500 bg-slate-100 text-slate-950"
+                        : "border-slate-700 bg-slate-800 text-slate-200 hover:border-slate-600 hover:bg-slate-700"
+                    }`}
                   >
-                    {label} ({guides.length})
-                  </span>
+                    {label} ({count})
+                  </Link>
                 );
               }
+
               const m = deviceMeta[key];
-              const count = guides.filter((g) => g.device === key).length;
               return (
-                <span
+                <Link
                   key={key}
-                  className={`rounded-full border px-3 py-1 text-sm font-medium ${m.color} ${m.bg} ${m.border}`}
+                  href={`/guides?device=${key}`}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded-full border px-3 py-1 text-sm font-medium transition ${
+                    isActive
+                      ? `${m.color} ${m.bg} ${m.border} shadow-[0_0_0_1px_rgba(255,255,255,0.06)]`
+                      : `${m.color} ${m.bg} ${m.border} hover:bg-slate-900 hover:text-white`
+                  }`}
                 >
                   {label} ({count})
-                </span>
+                </Link>
               );
             })}
           </div>
 
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-400">
+            <p>
+              Showing {visibleGuides.length} guide
+              {visibleGuides.length === 1 ? "" : "s"} in {activeLabel}.
+            </p>
+            {activeDevice !== "all" && (
+              <Link
+                href="/guides"
+                className="font-medium text-cyan-300 transition hover:text-cyan-200"
+              >
+                Clear filter
+              </Link>
+            )}
+          </div>
+
           {/* ── Guide cards ── */}
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {sortedGuides.map((guide) => {
+            {visibleGuides.map((guide) => {
               const m = deviceMeta[guide.device];
               const pubDate = new Date(guide.publishedAt).toLocaleDateString(
                 "en-US",
@@ -136,6 +186,20 @@ export default function GuidesIndexPage() {
               );
             })}
           </div>
+
+          {visibleGuides.length === 0 && (
+            <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-900/50 p-8 text-center">
+              <p className="text-base text-slate-300">
+                No guides match this filter yet.
+              </p>
+              <Link
+                href="/guides"
+                className="mt-3 inline-flex text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
+              >
+                View all guides
+              </Link>
+            </div>
+          )}
 
           {/* ── More guides coming CTA ── */}
           <div className="mt-16 rounded-2xl border border-slate-800 bg-slate-900/50 p-8 text-center">
