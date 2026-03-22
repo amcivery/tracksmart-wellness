@@ -1,5 +1,6 @@
 import Script from "next/script";
 import HRVOptimizer from "@/components/HRVOptimizer";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
@@ -60,7 +61,7 @@ export default function HRVOptimizerPage() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <Script
         id="hrv-howto-schema"
         type="application/ld+json"
@@ -68,6 +69,7 @@ export default function HRVOptimizerPage() {
       />
       <SiteHeader activePath="/tools/hrv-optimizer" />
       <HRVOptimizer />
-    </>
+      <SiteFooter />
+    </div>
   );
 }

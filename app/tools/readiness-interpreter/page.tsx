@@ -1,5 +1,6 @@
 import Script from "next/script";
 import ReadinessInterpreter from "@/components/ReadinessInterpreter";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
@@ -57,7 +58,7 @@ export default function ReadinessInterpreterPage() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <Script
         id="readiness-howto-schema"
         type="application/ld+json"
@@ -65,6 +66,7 @@ export default function ReadinessInterpreterPage() {
       />
       <SiteHeader activePath="/tools/readiness-interpreter" />
       <ReadinessInterpreter />
-    </>
+      <SiteFooter />
+    </div>
   );
 }

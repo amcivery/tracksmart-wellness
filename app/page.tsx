@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 const toolCards = [
   {
@@ -406,7 +407,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <footer className="border-t border-slate-800 bg-slate-950/80">
+        <section className="border-t border-slate-800 bg-slate-950/80">
           <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-16">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">
@@ -463,8 +464,9 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
-        </footer>
+        </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }
