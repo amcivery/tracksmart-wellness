@@ -3,6 +3,7 @@ import Script from "next/script";
 import {
   Activity,
   ArrowRight,
+  BedDouble,
   Brain,
   ChevronRight,
   HeartPulse,
@@ -38,6 +39,18 @@ const toolCards = [
     placeholderMetric: "Recovery 64%",
     placeholderTrend: "Moderate strain recommended",
   },
+  {
+    href: "/tools/sleep-score",
+    title: "Sleep Score Breakdown",
+    description:
+      "Upload your sleep data or enter metrics manually to get a detailed sleep score breakdown by stage with efficiency analysis. Use the habit simulator to see how caffeine cutoff, consistent bedtime, and screen habits could improve your sleep score.",
+    eyebrow: "All Devices",
+    accent: "from-violet-400/30 via-purple-500/20 to-transparent",
+    icon: BedDouble,
+    placeholderTitle: "Sleep Breakdown",
+    placeholderMetric: "Score 74",
+    placeholderTrend: "Deep sleep below target",
+  },
 ] as const;
 
 const benefits = [
@@ -58,6 +71,12 @@ const benefits = [
     body:
       "Instead of generic wellness advice, you get quick next steps: train, walk, fuel, hydrate, nap, reduce caffeine, or protect bedtime. The goal is fewer guesses and better decisions from the numbers you already have.",
     icon: Sparkles,
+  },
+  {
+    title: "Sleep Score Breakdown: See What Your Tracker Misses",
+    body:
+      "Most sleep trackers give you a single number. Our sleep score breakdown shows exactly how deep sleep, REM, efficiency, and disturbances contribute\u2014then lets you simulate how small habit changes like earlier caffeine cutoff or consistent bedtime could boost your score.",
+    icon: BedDouble,
   },
 ] as const;
 
@@ -92,13 +111,18 @@ const faqs = [
     answer:
       "The most useful approach is translating your metrics into a short explanation plus a specific action plan. That is the core idea behind TrackSmart Wellness: free interpretation tools that tell you what your wearable data likely means today and how to respond without needing another subscription.",
   },
+  {
+    question: "How is a sleep score calculated and what does each sleep stage contribute?",
+    answer:
+      "A sleep score typically weighs sleep efficiency (time asleep vs. time in bed), the balance of deep and REM sleep stages, the number of awakenings, and how quickly you fell asleep. Our free sleep score calculator breaks down each component so you can see exactly which areas are dragging your score down and which habits could improve it most.",
+  },
 ] as const;
 
 export const metadata = createPageMetadata({
   title:
-    "Free Oura Readiness Score Interpreter & Whoop Recovery Calculator – Understand Your Wearable Data in 2026",
+    "Free Oura Readiness Interpreter, Sleep Score Calculator & Whoop Recovery Tools – 2026",
   description:
-    "TrackSmart Wellness helps you understand Oura, Whoop, and Garmin data in 2026 with free plain-English recovery insights, readiness score explanations, and action plans.",
+    "TrackSmart Wellness helps you understand Oura, Whoop, and Garmin data in 2026 with free readiness score explanations, sleep score breakdown by stage, HRV optimization, and action plans.",
   keywords: [
     "Oura readiness score explained 2026",
     "Whoop recovery score explained",
@@ -109,6 +133,9 @@ export const metadata = createPageMetadata({
     "Garmin recovery interpretation",
     "free wearable data interpretation",
     "HRV optimizer",
+    "sleep score calculator 2026",
+    "sleep score breakdown by stage",
+    "sleep efficiency calculator free",
   ],
   path: "/",
 });
@@ -152,8 +179,8 @@ export default function LandingPage() {
               </div>
 
               <h1 className="mt-6 max-w-4xl text-balance text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Free Oura Readiness Score Interpreter &amp; Whoop Recovery
-                Calculator – Understand Your Wearable Data in 2026
+                Free Oura Readiness Interpreter, Sleep Score Calculator &amp;
+                Whoop Recovery Tools – 2026
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
@@ -175,6 +202,13 @@ export default function LandingPage() {
                   className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/70 px-6 py-4 text-base font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800"
                 >
                   Try HRV Optimizer
+                  <ChevronRight className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="/tools/sleep-score"
+                  className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/70 px-6 py-4 text-base font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800"
+                >
+                  Try Sleep Score Tool
                   <ChevronRight className="h-5 w-5" />
                 </Link>
               </div>
@@ -275,7 +309,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {toolCards.map((card) => {
               const Icon = card.icon;
 
@@ -351,7 +385,7 @@ export default function LandingPage() {
         </section>
 
         <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
 
@@ -372,35 +406,6 @@ export default function LandingPage() {
                 </article>
               );
             })}
-          </div>
-        </section>
-
-        <section className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-slate-950/30 sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">
-              FAQ
-            </p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
-              Common wearable data questions, answered clearly
-            </h2>
-            <div className="mt-8 space-y-4">
-              {faqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group rounded-2xl border border-slate-800 bg-slate-950/80 p-5"
-                >
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
-                    <span>{faq.question}</span>
-                    <span className="mt-0.5 text-cyan-300 transition group-open:rotate-45">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-400">
-                    {faq.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -462,6 +467,36 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        <section className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+          <div className="rounded-[2rem] border border-slate-800 bg-slate-900/70 p-6 shadow-2xl shadow-slate-950/30 sm:p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">
+              FAQ
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
+              Common wearable data questions, answered clearly
+            </h2>
+            <div className="mt-8 space-y-4">
+              {faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="group rounded-2xl border border-slate-800 bg-slate-950/80 p-5"
+                >
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
+                    <span>{faq.question}</span>
+                    <span className="mt-0.5 text-cyan-300 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-400">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </div>
       <SiteFooter />
     </main>

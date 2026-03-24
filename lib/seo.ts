@@ -58,9 +58,10 @@ function resolveSiteUrl() {
 
 export const siteConfig = {
   name: "TrackSmart Wellness",
-  title: "TrackSmart Wellness | Free Oura & Whoop Score Interpreters 2026",
+  title:
+    "TrackSmart Wellness | Free Oura, Whoop & Sleep Score Tools 2026",
   description:
-    "Free wearable data interpretation tools for Oura, Whoop, and Garmin in 2026, including readiness score calculators, recovery explainers, and HRV optimization guidance.",
+    "Free wearable data interpretation tools for Oura, Whoop, and Garmin in 2026, including readiness score calculators, recovery explainers, HRV optimization, and sleep score breakdown tools.",
   siteUrl: resolveSiteUrl(),
   keywords: [
     "Oura readiness score explained 2026",
@@ -77,6 +78,11 @@ export const siteConfig = {
     "how to boost HRV",
     "free wearable data interpretation",
     "Garmin Body Battery explained",
+    "sleep score calculator 2026",
+    "sleep score breakdown by stage",
+    "sleep efficiency calculator",
+    "how to improve sleep score",
+    "Oura sleep score explained",
     "TrackSmart Wellness",
   ],
   organization: {

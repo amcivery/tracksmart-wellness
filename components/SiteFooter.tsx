@@ -12,7 +12,7 @@ export default function SiteFooter() {
           <Watch className="h-4 w-4" />
           TrackSmart Wellness
         </Link>
-        <div className="flex gap-4 text-sm text-slate-500">
+        <div className="flex flex-wrap gap-4 text-sm text-slate-500">
           <Link href="/guides" className="transition hover:text-slate-300">
             Guides
           </Link>
@@ -27,6 +27,12 @@ export default function SiteFooter() {
             className="transition hover:text-slate-300"
           >
             HRV Optimizer
+          </Link>
+          <Link
+            href="/tools/sleep-score"
+            className="transition hover:text-slate-300"
+          >
+            Sleep Score
           </Link>
         </div>
         <p className="max-w-xs text-xs text-slate-600">
