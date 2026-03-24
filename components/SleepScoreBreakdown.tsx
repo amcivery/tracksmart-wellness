@@ -773,305 +773,360 @@ export default function SleepScoreBreakdown() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Tool header */}
-      <div className="mb-8">
-        <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-violet-200">
-          <MoonStar className="h-3.5 w-3.5" />
-          Sleep Score Breakdown
-        </div>
-        <h1 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
-          Free Sleep Score Calculator &amp; Habit Impact Simulator
-        </h1>
-        <p className="mt-3 max-w-3xl text-base leading-7 text-slate-400">
-          Upload your sleep data or enter metrics manually to get a detailed
-          sleep score breakdown by stage, efficiency, and disturbances. Then
-          use the habit simulator to see how small changes could improve your
-          score.
-        </p>
-      </div>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
+        <DisclaimerBanner
+          fixed={false}
+          message={TOOL_DISCLAIMER}
+          className="border-red-400/50 bg-red-950"
+        />
 
-      <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-        {/* Left column — Inputs */}
-        <div className="space-y-6">
-          {/* CSV Upload Zone */}
-          <div
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            className={`relative rounded-[1.75rem] border-2 border-dashed p-6 text-center transition ${
-              isDragging
-                ? "border-violet-400 bg-violet-400/10"
-                : "border-slate-700 bg-slate-900/50 hover:border-slate-600"
-            }`}
-          >
-            <Upload className="mx-auto h-8 w-8 text-slate-500" />
-            <p className="mt-3 text-sm font-medium text-slate-300">
-              Drag &amp; drop a CSV sleep export, or{" "}
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="font-semibold text-violet-300 underline hover:text-violet-200"
-              >
-                browse files
-              </button>
-            </p>
-            <p className="mt-1 text-xs text-slate-500">
-              Works with Oura, Whoop, Garmin, and Apple Health CSV exports
-            </p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".csv,.tsv,.txt"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleFileUpload(file);
-              }}
-            />
-            {csvError && (
-              <div className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-950/30 px-3 py-2 text-sm text-red-200">
-                <AlertTriangle className="h-4 w-4 shrink-0" />
-                {csvError}
-              </div>
-            )}
-            {csvSuccess && (
-              <div className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 px-3 py-2 text-sm text-emerald-200">
-                <Sparkles className="h-4 w-4 shrink-0" />
-                CSV imported successfully! Review the values below.
-              </div>
-            )}
-          </div>
+        <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/75 shadow-2xl shadow-slate-950/30">
+          <div className="bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.18),_transparent_38%),radial-gradient(circle_at_80%_10%,_rgba(56,189,248,0.14),_transparent_30%),linear-gradient(180deg,_rgba(15,23,42,0.28),_rgba(2,6,23,0.88))] px-5 py-8 sm:px-8 sm:py-10">
+            <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-violet-200">
+                  <MoonStar className="h-3.5 w-3.5" />
+                  Sleep Score Breakdown
+                </div>
+                <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
+                  Free Sleep Score Calculator &amp; Habit Impact Simulator
+                </h1>
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+                  Upload your sleep data or enter metrics manually to get a detailed
+                  sleep score breakdown by stage, efficiency, and disturbances. Then
+                  use the habit simulator to see how small changes could improve your
+                  score.
+                </p>
 
-          {/* Manual Entry Form */}
-          <form
-            onSubmit={handleSubmit((values) => saveSession(values))}
-            className="rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/25"
-          >
-            <h2 className="text-lg font-semibold text-white">
-              Sleep Metrics
-            </h2>
-            <p className="mt-1 text-sm text-slate-400">
-              Enter your single-night sleep data or edit the CSV import above.
-            </p>
-
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {/* Time in Bed */}
-              <div>
-                <label htmlFor="timeInBed" className="block text-sm font-medium text-slate-300">
-                  Time in Bed <span className="text-slate-500">(min)</span>
-                </label>
-                <input
-                  id="timeInBed"
-                  type="number"
-                  {...register("timeInBed", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="480"
-                />
-                {errors.timeInBed && (
-                  <p className="mt-1 text-xs text-red-300">{errors.timeInBed.message}</p>
-                )}
-              </div>
-
-              {/* Total Sleep Time */}
-              <div>
-                <label htmlFor="totalSleepTime" className="block text-sm font-medium text-slate-300">
-                  Total Sleep Time <span className="text-slate-500">(min)</span>
-                </label>
-                <input
-                  id="totalSleepTime"
-                  type="number"
-                  {...register("totalSleepTime", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="420"
-                />
-                {errors.totalSleepTime && (
-                  <p className="mt-1 text-xs text-red-300">{errors.totalSleepTime.message}</p>
-                )}
-              </div>
-
-              {/* Deep Sleep */}
-              <div>
-                <label htmlFor="deepSleep" className="block text-sm font-medium text-slate-300">
-                  Deep Sleep <span className="text-slate-500">(min)</span>
-                </label>
-                <input
-                  id="deepSleep"
-                  type="number"
-                  {...register("deepSleep", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="70"
-                />
-                {errors.deepSleep && (
-                  <p className="mt-1 text-xs text-red-300">{errors.deepSleep.message}</p>
-                )}
-              </div>
-
-              {/* REM Sleep */}
-              <div>
-                <label htmlFor="remSleep" className="block text-sm font-medium text-slate-300">
-                  REM Sleep <span className="text-slate-500">(min)</span>
-                </label>
-                <input
-                  id="remSleep"
-                  type="number"
-                  {...register("remSleep", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="90"
-                />
-                {errors.remSleep && (
-                  <p className="mt-1 text-xs text-red-300">{errors.remSleep.message}</p>
-                )}
-              </div>
-
-              {/* Awakenings */}
-              <div>
-                <label htmlFor="awakenings" className="block text-sm font-medium text-slate-300">
-                  Awakenings
-                </label>
-                <input
-                  id="awakenings"
-                  type="number"
-                  {...register("awakenings", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="3"
-                />
-                {errors.awakenings && (
-                  <p className="mt-1 text-xs text-red-300">{errors.awakenings.message}</p>
-                )}
-              </div>
-
-              {/* Sleep Onset Latency */}
-              <div>
-                <label htmlFor="sleepOnsetLatency" className="block text-sm font-medium text-slate-300">
-                  Time to Fall Asleep <span className="text-slate-500">(min)</span>
-                </label>
-                <input
-                  id="sleepOnsetLatency"
-                  type="number"
-                  {...register("sleepOnsetLatency", { valueAsNumber: true })}
-                  className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400"
-                  placeholder="12"
-                />
-                {errors.sleepOnsetLatency && (
-                  <p className="mt-1 text-xs text-red-300">{errors.sleepOnsetLatency.message}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Source device */}
-            <div className="mt-4">
-              <label htmlFor="source" className="block text-sm font-medium text-slate-300">
-                Source Device
-              </label>
-              <select
-                id="source"
-                {...register("source")}
-                className="mt-1 h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 text-sm text-white outline-none focus:border-violet-400"
-              >
-                {sourceDevices.map((device) => (
-                  <option key={device} value={device}>
-                    {sourceDeviceLabels[device]}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Light sleep display */}
-            {analysis && (
-              <div className="mt-4 flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3">
-                <Moon className="h-4 w-4 text-emerald-300" />
-                <div className="text-sm">
-                  <span className="text-slate-400">Light Sleep (auto): </span>
-                  <span className="font-medium text-white">
-                    {formatMinutes(
-                      Math.max(
-                        0,
-                        (watchedValues.totalSleepTime ?? 0) -
-                          (watchedValues.deepSleep ?? 0) -
-                          (watchedValues.remSleep ?? 0),
-                      ),
-                    )}{" "}
-                    ({analysis.lightPercent}%)
-                  </span>
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                      Supports
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-100">
+                      Oura, Whoop, Garmin
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                      Output
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-100">
+                      Score breakdown + habits
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                      History
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-100">
+                      Saved in your browser
+                    </p>
+                  </div>
                 </div>
               </div>
-            )}
 
-            {/* Action buttons */}
-            <div className="mt-5 flex gap-3">
-              <button
-                type="submit"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
-              >
-                <Sparkles className="h-4 w-4" />
-                Save Session
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  reset(defaultValues);
-                  setActiveHabits({});
-                }}
-                className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-600 hover:text-white"
-              >
-                Reset
-              </button>
-            </div>
-          </form>
-
-          {/* History */}
-          {history.length > 0 && (
-            <div className="rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/25">
-              <button
-                type="button"
-                onClick={() => setShowHistory(!showHistory)}
-                className="flex w-full items-center justify-between text-left"
-              >
-                <div className="flex items-center gap-2">
-                  <History className="h-4 w-4 text-slate-400" />
-                  <h3 className="text-sm font-semibold text-white">
-                    Saved Sessions ({history.length})
-                  </h3>
+              <div className="rounded-[1.75rem] border border-slate-800 bg-slate-950/80 p-5 sm:p-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-400/10 text-violet-300">
+                    <BedDouble className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">
+                      Sleep Score Calculator
+                    </p>
+                    <p className="text-sm text-slate-400">
+                      Enter your sleep data or upload a CSV export.
+                    </p>
+                  </div>
                 </div>
-                {showHistory ? (
-                  <ChevronUp className="h-4 w-4 text-slate-400" />
-                ) : (
-                  <ChevronDown className="h-4 w-4 text-slate-400" />
-                )}
-              </button>
-              {showHistory && (
-                <div className="mt-4 space-y-3">
-                  {history.map((session) => (
+
+                {/* CSV Upload Zone */}
+                <div
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  className={`mt-5 relative rounded-2xl border-2 border-dashed p-5 text-center transition ${
+                    isDragging
+                      ? "border-violet-400 bg-violet-400/10"
+                      : "border-slate-700 bg-slate-900/50 hover:border-slate-600"
+                  }`}
+                >
+                  <Upload className="mx-auto h-6 w-6 text-slate-500" />
+                  <p className="mt-2 text-sm font-medium text-slate-300">
+                    Drag &amp; drop a CSV sleep export, or{" "}
                     <button
-                      key={session.id}
                       type="button"
-                      onClick={() => reset(session.values)}
-                      className="flex w-full items-center justify-between rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-left transition hover:border-slate-700"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="font-semibold text-violet-300 underline hover:text-violet-200"
                     >
-                      <div>
-                        <p className="text-sm font-medium text-slate-200">
-                          Score: {session.score}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {formatSavedTime(session.timestamp)}
-                        </p>
-                      </div>
-                      <p className="text-sm font-medium text-slate-400">
-                        {formatMinutes(session.values.totalSleepTime)} sleep
-                      </p>
+                      browse files
                     </button>
-                  ))}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Works with Oura, Whoop, Garmin, and Apple Health CSV exports
+                  </p>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".csv,.tsv,.txt"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleFileUpload(file);
+                    }}
+                  />
+                  {csvError && (
+                    <div className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-950/30 px-3 py-2 text-sm text-red-200">
+                      <AlertTriangle className="h-4 w-4 shrink-0" />
+                      {csvError}
+                    </div>
+                  )}
+                  {csvSuccess && (
+                    <div className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 px-3 py-2 text-sm text-emerald-200">
+                      <Sparkles className="h-4 w-4 shrink-0" />
+                      CSV imported successfully! Review the values below.
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          )}
-        </div>
 
-        {/* Right column — Results */}
-        <div className="space-y-6">
-          {analysis ? (
-            <>
+                {/* Manual Entry Form */}
+                <form
+                  onSubmit={handleSubmit((values) => saveSession(values))}
+                  className="mt-6 space-y-5"
+                >
+                  <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">
+                    Sleep Metrics
+                  </h2>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {/* Time in Bed */}
+                    <div className="space-y-2">
+                      <label htmlFor="timeInBed" className="text-sm font-medium text-slate-200">
+                        Time in Bed (min)
+                      </label>
+                      <input
+                        id="timeInBed"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("timeInBed", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="480"
+                      />
+                      {errors.timeInBed && (
+                        <p className="text-sm text-red-300">{errors.timeInBed.message}</p>
+                      )}
+                    </div>
+
+                    {/* Total Sleep Time */}
+                    <div className="space-y-2">
+                      <label htmlFor="totalSleepTime" className="text-sm font-medium text-slate-200">
+                        Total Sleep Time (min)
+                      </label>
+                      <input
+                        id="totalSleepTime"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("totalSleepTime", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="420"
+                      />
+                      {errors.totalSleepTime && (
+                        <p className="text-sm text-red-300">{errors.totalSleepTime.message}</p>
+                      )}
+                    </div>
+
+                    {/* Deep Sleep */}
+                    <div className="space-y-2">
+                      <label htmlFor="deepSleep" className="text-sm font-medium text-slate-200">
+                        Deep Sleep (min)
+                      </label>
+                      <input
+                        id="deepSleep"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("deepSleep", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="70"
+                      />
+                      {errors.deepSleep && (
+                        <p className="text-sm text-red-300">{errors.deepSleep.message}</p>
+                      )}
+                    </div>
+
+                    {/* REM Sleep */}
+                    <div className="space-y-2">
+                      <label htmlFor="remSleep" className="text-sm font-medium text-slate-200">
+                        REM Sleep (min)
+                      </label>
+                      <input
+                        id="remSleep"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("remSleep", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="90"
+                      />
+                      {errors.remSleep && (
+                        <p className="text-sm text-red-300">{errors.remSleep.message}</p>
+                      )}
+                    </div>
+
+                    {/* Awakenings */}
+                    <div className="space-y-2">
+                      <label htmlFor="awakenings" className="text-sm font-medium text-slate-200">
+                        Awakenings
+                      </label>
+                      <input
+                        id="awakenings"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("awakenings", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="3"
+                      />
+                      {errors.awakenings && (
+                        <p className="text-sm text-red-300">{errors.awakenings.message}</p>
+                      )}
+                    </div>
+
+                    {/* Sleep Onset Latency */}
+                    <div className="space-y-2">
+                      <label htmlFor="sleepOnsetLatency" className="text-sm font-medium text-slate-200">
+                        Time to Fall Asleep (min)
+                      </label>
+                      <input
+                        id="sleepOnsetLatency"
+                        type="number"
+                        inputMode="numeric"
+                        {...register("sleepOnsetLatency", { valueAsNumber: true })}
+                        className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-lg font-semibold text-white outline-none transition focus:border-violet-400"
+                        placeholder="12"
+                      />
+                      {errors.sleepOnsetLatency && (
+                        <p className="text-sm text-red-300">{errors.sleepOnsetLatency.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Source device */}
+                  <div className="space-y-2">
+                    <label htmlFor="source" className="text-sm font-medium text-slate-200">
+                      Source Device
+                    </label>
+                    <select
+                      id="source"
+                      {...register("source")}
+                      className="h-14 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 text-base text-white outline-none transition focus:border-violet-400"
+                    >
+                      {sourceDevices.map((device) => (
+                        <option key={device} value={device}>
+                          {sourceDeviceLabels[device]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Light sleep display */}
+                  {analysis && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3">
+                      <Moon className="h-4 w-4 text-emerald-300" />
+                      <div className="text-sm">
+                        <span className="text-slate-400">Light Sleep (auto): </span>
+                        <span className="font-medium text-white">
+                          {formatMinutes(
+                            Math.max(
+                              0,
+                              (watchedValues.totalSleepTime ?? 0) -
+                                (watchedValues.deepSleep ?? 0) -
+                                (watchedValues.remSleep ?? 0),
+                            ),
+                          )}{" "}
+                          ({analysis.lightPercent}%)
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      type="submit"
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-violet-500 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-violet-400"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      Save Session
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        reset(defaultValues);
+                        setActiveHabits({});
+                      }}
+                      className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-3.5 text-sm font-medium text-slate-300 transition hover:border-slate-600 hover:text-white"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+
+                {/* History */}
+                {history.length > 0 && (
+                  <div className="mt-5 rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowHistory(!showHistory)}
+                      className="flex w-full items-center justify-between text-left"
+                    >
+                      <div className="flex items-center gap-2">
+                        <History className="h-4 w-4 text-slate-400" />
+                        <h3 className="text-sm font-semibold text-white">
+                          Saved Sessions ({history.length})
+                        </h3>
+                      </div>
+                      {showHistory ? (
+                        <ChevronUp className="h-4 w-4 text-slate-400" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-slate-400" />
+                      )}
+                    </button>
+                    {showHistory && (
+                      <div className="mt-4 space-y-3">
+                        {history.map((session) => (
+                          <button
+                            key={session.id}
+                            type="button"
+                            onClick={() => reset(session.values)}
+                            className="flex w-full items-center justify-between rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-left transition hover:border-slate-700"
+                          >
+                            <div>
+                              <p className="text-sm font-medium text-slate-200">
+                                Score: {session.score}
+                              </p>
+                              <p className="text-xs text-slate-500">
+                                {formatSavedTime(session.timestamp)}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium text-slate-400">
+                              {formatMinutes(session.values.totalSleepTime)} sleep
+                            </p>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Results section */}
+        {analysis ? (
+          <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+            {/* Left column — Charts */}
+            <div className="space-y-6">
               {/* Score gauge */}
               <div className="rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/25">
                 <div className="grid items-center gap-6 sm:grid-cols-[200px_1fr]">
@@ -1160,7 +1215,10 @@ export default function SleepScoreBreakdown() {
                   ))}
                 </div>
               </div>
+            </div>
 
+            {/* Right column — Habits + Suggestions */}
+            <div className="space-y-6">
               {/* Habit simulator */}
               <div className="rounded-[1.75rem] border border-violet-400/20 bg-gradient-to-br from-violet-400/5 via-slate-900/70 to-slate-900/70 p-5 shadow-xl shadow-slate-950/25">
                 <div className="flex items-center gap-2">
@@ -1277,97 +1335,88 @@ export default function SleepScoreBreakdown() {
                   As an Amazon Associate I earn from qualifying purchases.
                 </p>
               </div>
-            </>
-          ) : (
-            <div className="flex min-h-[400px] items-center justify-center rounded-[1.75rem] border border-slate-800 bg-slate-900/50 p-10 text-center">
-              <div>
-                <BedDouble className="mx-auto h-12 w-12 text-slate-700" />
-                <p className="mt-4 text-lg font-semibold text-slate-400">
-                  Enter your sleep metrics
-                </p>
-                <p className="mt-2 text-sm text-slate-500">
-                  Fill in the form or upload a CSV to see your sleep score
-                  breakdown and personalized recommendations.
-                </p>
+            </div>
+          </section>
+        ) : null}
+
+        {/* Scoring methodology */}
+        <section className="rounded-[2rem] border border-slate-800 bg-slate-900/75 p-6 shadow-2xl shadow-slate-950/30 sm:p-8">
+          <h2 className="text-xl font-bold text-white">
+            How Is Your Sleep Score Calculated?
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-400">
+            Your sleep score is a weighted composite of four components, each
+            reflecting a different dimension of sleep quality. Sleep efficiency
+            (40%) measures the ratio of actual sleep to time in bed, penalizing
+            excessive tossing and waking. Sleep stage balance (30%) evaluates
+            whether your deep sleep and REM sleep fall within healthy
+            proportions, since both stages are essential for physical recovery,
+            memory consolidation, and emotional regulation. The disturbance
+            penalty (20%) accounts for the number of nighttime awakenings, which
+            fragment sleep architecture even when total sleep time looks normal.
+            Finally, sleep onset latency (10%) measures how long it takes you to
+            fall asleep, with longer onset times often signaling hyperarousal,
+            poor sleep pressure, or suboptimal wind-down habits.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: "Sleep Efficiency", weight: "40%", desc: "Time asleep vs. time in bed" },
+              { label: "Stage Balance", weight: "30%", desc: "Deep + REM proportions" },
+              { label: "Disturbance Penalty", weight: "20%", desc: "Nighttime awakenings" },
+              { label: "Sleep Onset Latency", weight: "10%", desc: "Time to fall asleep" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3"
+              >
+                <p className="text-lg font-bold text-violet-300">{item.weight}</p>
+                <p className="mt-1 text-sm font-semibold text-white">{item.label}</p>
+                <p className="mt-1 text-xs text-slate-500">{item.desc}</p>
               </div>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SEO content section */}
+        <section className="rounded-[2rem] border border-slate-800 bg-slate-900/75 p-6 shadow-2xl shadow-slate-950/30 sm:p-8">
+          <h2 className="text-xl font-bold text-white">
+            Why Use a Sleep Score Calculator in 2026?
+          </h2>
+          <div className="mt-4 space-y-4 text-sm leading-7 text-slate-400">
+            <p>
+              Sleep trackers from Oura, Whoop, Garmin, and Apple Watch give you
+              a sleep score each morning, but most people have no idea what
+              drives that number. Is it your deep sleep percentage, your sleep
+              efficiency, or the three times you woke up at 2 AM? A sleep score
+              breakdown tool answers that question by splitting your single
+              number into its component parts so you can see exactly where to
+              improve.
+            </p>
+            <p>
+              The habit impact simulator takes it a step further. Instead of
+              vague advice like &ldquo;improve your sleep hygiene,&rdquo; you
+              can toggle specific habits&#x2014;caffeine cutoff before 2 PM,
+              consistent bedtime, screen avoidance, or skipping alcohol&#x2014;and
+              see the projected point improvement. This makes it easier to
+              prioritize which change to try first based on your current
+              deficiency areas.
+            </p>
+            <p>
+              Whether you are troubleshooting a low Oura sleep score, trying to
+              improve deep sleep percentage on your Whoop, or just want to
+              understand what sleep onset latency means for your overall sleep
+              quality, this free calculator gives you the clarity that your
+              tracker app leaves out.
+            </p>
+          </div>
+        </section>
+
+        <DisclaimerBanner
+          fixed={false}
+          message={TOOL_DISCLAIMER}
+          className="border-red-400/50 bg-red-950"
+        />
       </div>
-
-      {/* Scoring methodology */}
-      <section className="mt-12 rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-6">
-        <h2 className="text-xl font-bold text-white">
-          How Is Your Sleep Score Calculated?
-        </h2>
-        <p className="mt-3 text-sm leading-7 text-slate-400">
-          Your sleep score is a weighted composite of four components, each
-          reflecting a different dimension of sleep quality. Sleep efficiency
-          (40%) measures the ratio of actual sleep to time in bed, penalizing
-          excessive tossing and waking. Sleep stage balance (30%) evaluates
-          whether your deep sleep and REM sleep fall within healthy
-          proportions, since both stages are essential for physical recovery,
-          memory consolidation, and emotional regulation. The disturbance
-          penalty (20%) accounts for the number of nighttime awakenings, which
-          fragment sleep architecture even when total sleep time looks normal.
-          Finally, sleep onset latency (10%) measures how long it takes you to
-          fall asleep, with longer onset times often signaling hyperarousal,
-          poor sleep pressure, or suboptimal wind-down habits.
-        </p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { label: "Sleep Efficiency", weight: "40%", desc: "Time asleep vs. time in bed" },
-            { label: "Stage Balance", weight: "30%", desc: "Deep + REM proportions" },
-            { label: "Disturbance Penalty", weight: "20%", desc: "Nighttime awakenings" },
-            { label: "Sleep Onset Latency", weight: "10%", desc: "Time to fall asleep" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3"
-            >
-              <p className="text-lg font-bold text-violet-300">{item.weight}</p>
-              <p className="mt-1 text-sm font-semibold text-white">{item.label}</p>
-              <p className="mt-1 text-xs text-slate-500">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* SEO content section */}
-      <section className="mt-8 rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-6">
-        <h2 className="text-xl font-bold text-white">
-          Why Use a Sleep Score Calculator in 2026?
-        </h2>
-        <div className="mt-4 space-y-4 text-sm leading-7 text-slate-400">
-          <p>
-            Sleep trackers from Oura, Whoop, Garmin, and Apple Watch give you
-            a sleep score each morning, but most people have no idea what
-            drives that number. Is it your deep sleep percentage, your sleep
-            efficiency, or the three times you woke up at 2 AM? A sleep score
-            breakdown tool answers that question by splitting your single
-            number into its component parts so you can see exactly where to
-            improve.
-          </p>
-          <p>
-            The habit impact simulator takes it a step further. Instead of
-            vague advice like &ldquo;improve your sleep hygiene,&rdquo; you
-            can toggle specific habits\u2014caffeine cutoff before 2 PM,
-            consistent bedtime, screen avoidance, or skipping alcohol\u2014and
-            see the projected point improvement. This makes it easier to
-            prioritize which change to try first based on your current
-            deficiency areas.
-          </p>
-          <p>
-            Whether you are troubleshooting a low Oura sleep score, trying to
-            improve deep sleep percentage on your Whoop, or just want to
-            understand what sleep onset latency means for your overall sleep
-            quality, this free calculator gives you the clarity that your
-            tracker app leaves out.
-          </p>
-        </div>
-      </section>
-
-      <DisclaimerBanner fixed message={TOOL_DISCLAIMER} />
     </div>
   );
 }
