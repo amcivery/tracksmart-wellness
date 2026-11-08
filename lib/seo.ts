@@ -89,7 +89,6 @@ export const siteConfig = {
     name: "TrackSmart Wellness",
     description:
       "Educational wellness tools that help people interpret wearable recovery and readiness scores.",
-    logo: "/logo.png",
     sameAs: [],
   },
 } as const;

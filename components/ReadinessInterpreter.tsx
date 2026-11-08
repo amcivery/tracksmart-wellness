@@ -1579,6 +1579,37 @@ export default function ReadinessInterpreter() {
           </section>
         )}
 
+        <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/75 shadow-xl shadow-slate-950/20">
+          <div className="px-5 py-8 sm:px-8 sm:py-10">
+            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Understand your score before interpreting it
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-300">
+              This tool explains the score you enter; it does not reproduce the wearable maker's scoring model or assess whether exercise is safe for you.
+            </p>
+            <div className="mt-6 space-y-3">
+              <a
+                href="/guides/why-is-my-oura-readiness-score-low"
+                className="block rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-sm font-medium text-cyan-300 transition hover:border-slate-600 hover:bg-slate-900"
+              >
+                Why Oura readiness can be low
+              </a>
+              <a
+                href="/guides/oura-readiness-score-60-meaning"
+                className="block rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-sm font-medium text-cyan-300 transition hover:border-slate-600 hover:bg-slate-900"
+              >
+                What an Oura readiness score of 60 means
+              </a>
+              <a
+                href="/guides/whoop-recovery-red-should-i-train"
+                className="block rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-sm font-medium text-cyan-300 transition hover:border-slate-600 hover:bg-slate-900"
+              >
+                Understanding red Whoop recovery
+              </a>
+            </div>
+          </div>
+        </section>
+
         <DisclaimerBanner
           fixed={false}
           message={TOOL_DISCLAIMER}

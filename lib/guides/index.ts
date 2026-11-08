@@ -380,7 +380,7 @@ export const guides: Guide[] = [
     metaTitle:
       "Why Is Your Whoop Recovery Always Red? 8 Likely Reasons Explained",
     metaDescription:
-      "If your Whoop recovery is chronically in the red zone, one or more of eight common factors is almost certainly responsible. This guide covers each one and includes a practical 5-day reset plan.",
+      "Explore possible reasons for repeated red Whoop recovery scores and the limits of wearable interpretation. Educational information, not a diagnosis or treatment plan.",
     keywords: [
       "why is my whoop recovery always red",
       "whoop recovery chronically red",

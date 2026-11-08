@@ -5,9 +5,9 @@ import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Oura Readiness Score Explained & Calculator 2026 | Free Tool",
+  title: "Oura Readiness & Whoop Recovery Interpreter",
   description:
-    "Use this free readiness score calculator to understand Oura readiness score low patterns, Whoop recovery score explained ranges, and low readiness score what to do in plain English.",
+    "Enter an Oura readiness, Whoop recovery or strain, or Garmin Body Battery score for an educational explanation of its range and context.",
   keywords: [
     "Oura readiness score low",
     "Whoop recovery score explained",

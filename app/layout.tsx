@@ -60,7 +60,6 @@ export default function RootLayout({
       name: siteConfig.organization.name,
       url: absoluteUrl("/"),
       description: siteConfig.organization.description,
-      logo: absoluteUrl(siteConfig.organization.logo),
       sameAs: siteConfig.organization.sameAs,
     },
   ];
