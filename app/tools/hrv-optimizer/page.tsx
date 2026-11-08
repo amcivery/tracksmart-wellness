@@ -7,7 +7,7 @@ import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Free HRV Optimizer & Simulator for Oura & Whoop 2026",
   description:
-    "Use this free HRV calculator wearable tool to improve HRV Oura and Whoop trends, model HRV readiness score changes, and learn how to boost HRV with better recovery habits.",
+    "Explore illustrative HRV trend scenarios using your Oura or Whoop readings and habit inputs. Educational modeling, not a prediction of your health or recovery.",
   keywords: [
     "HRV calculator wearable",
     "improve HRV Oura",
