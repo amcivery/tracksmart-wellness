@@ -5,7 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Oura Readiness & Whoop Recovery Interpreter | TrackSmart Wellness",
+  title: "Oura Readiness & Whoop Recovery Interpreter",
   description:
     "Enter an Oura readiness, Whoop recovery or strain, or Garmin Body Battery score for an educational explanation of its range and context.",
   keywords: [
