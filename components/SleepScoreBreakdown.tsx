@@ -781,7 +781,7 @@ export default function SleepScoreBreakdown() {
           Sleep Score Breakdown
         </div>
         <h1 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
-          Free Sleep Score Calculator &amp; Habit Impact Simulator
+          Sleep Score Calculator &amp; Stage Breakdown
         </h1>
         <p className="mt-3 max-w-3xl text-base leading-7 text-slate-400">
           Upload your sleep data or enter metrics manually to get a detailed

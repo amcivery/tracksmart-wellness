@@ -25,9 +25,9 @@ export default function HRVOptimizerPage() {
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: "How to simulate HRV improvement over 30 days",
+    name: "How to explore HRV trends with recovery habit scenarios",
     description:
-      "Enter your baseline HRV, today's HRV, and recovery habits to model how your HRV could improve with better sleep, lower alcohol intake, and smarter training.",
+      "Enter your baseline HRV, today's HRV, and recovery habits to explore illustrative HRV trend scenarios with different sleep, alcohol, and training patterns.",
     totalTime: "PT1M",
     tool: [
       {
@@ -49,7 +49,7 @@ export default function HRVOptimizerPage() {
       {
         "@type": "HowToStep",
         name: "Run the 30-day simulation",
-        text: "Generate the projected trendline to compare your flat baseline against the modeled HRV improvement curve.",
+        text: "Generate the projected trendline to compare your flat baseline against the modeled HRV scenario path.",
       },
       {
         "@type": "HowToStep",

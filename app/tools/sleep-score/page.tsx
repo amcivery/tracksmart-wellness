@@ -6,9 +6,9 @@ import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title:
-    "Free Sleep Score Calculator & Habit Impact Simulator 2026 – Breakdown by Stage",
+    "Sleep Score Calculator & Breakdown (Oura, Whoop & More)",
   description:
-    "Upload or enter your sleep data to get a detailed sleep score breakdown by stage, efficiency, and disturbances. Use the habit simulator to see how caffeine cutoff, consistent bedtime, and screen habits could improve your sleep score in 2026.",
+    "Upload or enter your sleep data to get a detailed breakdown of your sleep score by stage, efficiency, and disturbances. See which components—deep sleep, REM, efficiency, or awakenings—contribute most to your Oura, Whoop, Garmin, or Apple Watch sleep score and explore how habits affect each stage.",
   keywords: [
     "sleep score calculator 2026",
     "sleep score breakdown by stage",
@@ -35,9 +35,9 @@ export default function SleepScorePage() {
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: "How to calculate and improve your sleep score",
+    name: "How to calculate and analyze your sleep score",
     description:
-      "Enter your sleep metrics or upload a CSV export from Oura, Whoop, Garmin, or Apple Watch to get a detailed sleep score breakdown and simulate how habit changes could improve your score.",
+      "Enter your sleep metrics or upload a CSV export from Oura, Whoop, Garmin, or Apple Watch to get a detailed sleep score breakdown and explore how different habits affect each sleep component.",
     totalTime: "PT2M",
     tool: [
       {
@@ -59,12 +59,12 @@ export default function SleepScorePage() {
       {
         "@type": "HowToStep",
         name: "Explore your sleep stage distribution",
-        text: "View a visual breakdown of deep, REM, and light sleep percentages compared to ideal ranges so you know which stages need improvement.",
+        text: "View a visual breakdown of deep, REM, and light sleep percentages compared to typical healthy ranges to understand how your stages compare.",
       },
       {
         "@type": "HowToStep",
-        name: "Simulate habit improvements",
-        text: "Toggle habits like caffeine cutoff before 2 PM, consistent bedtime, no screens before bed, or no alcohol to see projected score improvements and prioritize changes.",
+        name: "Explore habit scenarios",
+        text: "Toggle habits like caffeine cutoff before 2 PM, consistent bedtime, no screens before bed, or no alcohol to see projected score changes based on these different scenarios.",
       },
     ],
     mainEntityOfPage: absoluteUrl("/tools/sleep-score"),
