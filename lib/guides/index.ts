@@ -268,7 +268,7 @@ export const guides: Guide[] = [
       {
         question: "What Oura readiness score is too low to work out?",
         answer:
-          "Most coaches and users treat scores below 55 as a strong signal to rest or do only very gentle movement. Between 55 and 65, modify the session. Above 65, proceed with training adjusted to how you feel on the day.",
+          "Most coaches and users treat scores below 60 as a strong signal to rest or do only very gentle movement. Between 60 and 69, modify the session. Above 70, proceed with training adjusted to how you feel on the day.",
       },
       {
         question: "Can I build fitness on low-readiness days?",
