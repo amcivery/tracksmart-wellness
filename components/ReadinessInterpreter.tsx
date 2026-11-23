@@ -1585,7 +1585,7 @@ export default function ReadinessInterpreter() {
               Understand your score before interpreting it
             </h2>
             <p className="mt-4 text-base leading-7 text-slate-300">
-              This tool explains the score you enter; it does not reproduce the wearable maker's scoring model or assess whether exercise is safe for you.
+              This tool explains the score you enter; it does not reproduce the wearable maker's scoring model or assess whether exercise is safe for you. If you just crossed time zones, the context toggles do not capture travel — see <a href="/guides/why-is-my-oura-readiness-score-low#can-a-flight-lower-my-oura-readiness" className="font-semibold text-cyan-300 hover:text-cyan-200 underline">Can a flight lower my Oura readiness?</a> in Why Oura readiness can be low.
             </p>
             <div className="mt-6 space-y-3">
               <a

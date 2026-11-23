@@ -147,22 +147,29 @@ export default function GuideLayout({ guide }: GuideLayoutProps) {
                     Frequently Asked Questions
                   </h2>
                   <div className="mt-6 space-y-4">
-                    {guide.faq.map((item, i) => (
-                      <details
-                        key={i}
-                        className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5"
-                      >
-                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
-                          <span>{item.question}</span>
-                          <span className="mt-0.5 flex-shrink-0 text-cyan-300 transition group-open:rotate-45">
-                            +
-                          </span>
-                        </summary>
-                        <p className="mt-4 text-base leading-7 text-slate-400">
-                          {item.answer}
-                        </p>
-                      </details>
-                    ))}
+                    {guide.faq.map((item, i) => {
+                      const faqId = item.question
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-|-$/g, '');
+                      return (
+                        <details
+                          key={i}
+                          id={faqId}
+                          className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5"
+                        >
+                          <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
+                            <span>{item.question}</span>
+                            <span className="mt-0.5 flex-shrink-0 text-cyan-300 transition group-open:rotate-45">
+                              +
+                            </span>
+                          </summary>
+                          <p className="mt-4 text-base leading-7 text-slate-400">
+                            {item.answer}
+                          </p>
+                        </details>
+                      );
+                    })}
                   </div>
                 </section>
               )}

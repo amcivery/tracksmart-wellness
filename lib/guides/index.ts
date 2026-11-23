@@ -142,6 +142,11 @@ export const guides: Guide[] = [
         answer:
           "It depends on how low. Below 60 generally favors easy movement or rest. Between 60 and 69, consider reducing intensity rather than skipping entirely. Use the Readiness Interpreter tool to get a specific recommendation based on your score and context.",
       },
+      {
+        question: "Can a flight lower my Oura readiness?",
+        answer:
+          "Crossing time zones can lower your Readiness Score even after a full night in bed. Oura says your internal clock often stays on home time, so sleep, energy, and hunger can follow your old schedule. Oura evaluates your daily readings against your personal averages, so a night that doesn't match your usual sleep timing or amount can score lower than usual.\n\nTreat one low score after travel as context, not a crisis. Protect sleep, ease up on hard training if the score is well below your usual range, and watch whether the dip lasts several days. Oura's Jet Lag Plan offers timed guidance for trips across three or more time zones and lets you compare your Readiness Score with typical recoveries on similar trips. Oura says you need a Gen3 or later ring, an active membership, and the language set to English. If symptoms worry you, talk to a qualified clinician.",
+      },
     ],
     relatedTool: {
       href: "/tools/readiness-interpreter",
