@@ -158,15 +158,22 @@ export default function GuideLayout({ guide }: GuideLayoutProps) {
                           id={faqId}
                           className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5"
                         >
-                          <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
-                            <span>{item.question}</span>
-                            <span className="mt-0.5 flex-shrink-0 text-cyan-300 transition group-open:rotate-45">
-                              +
-                            </span>
-                          </summary>
-                          <p className="mt-4 text-base leading-7 text-slate-400">
-                            {item.answer}
-                          </p>
+                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
+                          <span>{item.question}</span>
+                          <span className="mt-0.5 flex-shrink-0 text-cyan-300 transition group-open:rotate-45">
+                            +
+                          </span>
+                        </summary>
+                        <div>
+                          {item.answer.split('\n\n').map((paragraph, pIdx) => (
+                            <p
+                              key={pIdx}
+                              className={`text-base leading-7 text-slate-400 ${pIdx === 0 ? 'mt-4' : 'mt-4'}`}
+                            >
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
                         </details>
                       );
                     })}
